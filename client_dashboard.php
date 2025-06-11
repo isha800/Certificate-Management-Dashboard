@@ -68,18 +68,25 @@ if(isset($_POST['sub'])||isset($_POST['su']))
         $name=$row['name'];
         $title=$row['title'];
         $status=$row['status'];
+        $des=$row['description'];
         $expiry=$row['expiry_date'];
          $email=$row['email'];
         $pdf=new FPDF();
         $pdf->AddPage();
-        $pdf->SetFont('Arial','B',16);
-        $pdf->cell(0,10,'course completion certificate',0,1,'C');
-        $pdf->SetFont('Arial','',12);
-        $pdf->cell(0,10,"Name:$name",0,1);
-        $pdf->cell(0,10,"Course:$title",0,1);
+        $pdf->settextcolor(0,0,128);
+        $pdf->SetFont('Arial','BU',30);
+        $pdf->cell(0,20,"$title",0,1,'C');
+        $pdf->settextcolor(0,0,0);
+        $pdf->SetFont('Arial','',20);
+        $pdf->multicell(0,19,"$des",0,'C');
+        //$pdf->cell(0,10,"$name",0,1,'C');
         if($status=='Approved')
         {
-         try{ $pdf->cell(0,10,"Expiry Date:$expiry",0,1);
+         try{
+           $pdf->settextcolor(255,0,0);
+          $pdf->setfont('Arial','',18);
+          $pdf->sety(70);
+          $pdf->cell(0,30,"Expiry Date:$expiry",0,1);
           $pdf->cell(0,10,'(This is your final approved certificate)',0,1);
           //send email
           $mail = new PHPMailer(true);
@@ -111,8 +118,11 @@ if(isset($_POST['sub'])||isset($_POST['su']))
 
         }
         else
-        {
-          $pdf->cell(0,10,"Expiry Date:XX/XX/XXXX",0,1);
+        { 
+          $pdf->settextcolor(255,0,0);
+          $pdf->setfont('Arial','',18);
+          $pdf->sety(70);
+          $pdf->cell(0,30,"Expiry Date:XX/XX/XXXX",0,1);
           $pdf->cell(0,10,'(This is a masked preview)',0,1);
         }
         $pdf->Ln(10);
@@ -235,7 +245,7 @@ if(isset($_POST['sub'])||isset($_POST['su']))
        .badge
         {
             background-color:red;
-            right:526px;
+            right:445px;
             color:white;
             position:absolute;
             font-size:12px;
@@ -246,7 +256,7 @@ if(isset($_POST['sub'])||isset($_POST['su']))
 </head>
     <body>
         <a href="logout.php"  class="button" name="logout">logout</a>
-        <h2> Your Certificates  &nbsp &nbsp&nbsp&nbsp  
+        <h2> Welcome to Client Dashboard  &nbsp &nbsp&nbsp&nbsp  
         <img src="bell.jpg" height="47" >
         <?php if ($notif_count>0): ?>
         <span class="badge">
@@ -319,11 +329,6 @@ if(isset($_POST['sub'])||isset($_POST['su']))
              ?>
         </table>
         </form>
-        <script>
-          if(performance.navigation.type===2)
-          {
-            location.reload(true);
-          }
-        </script> 
+        
 </body>
 </html>

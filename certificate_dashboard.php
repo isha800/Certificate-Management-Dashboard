@@ -143,7 +143,7 @@ if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['status']))
               <th>EXPIRY DATE</th>
               <th>CLIENT NAME</th>
               <th>STATUS</th>
-              <th>ACTIONS</th>   
+              <th>ACTION</th>   
             </tr>
              <?php
                    
@@ -158,12 +158,12 @@ if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['status']))
                      echo "<td>{$row['name']}</td>";
                      $statusclass=strtolower($row['status']);
                      echo "<td class='status $statusclass' >{$row['status']}</td>";
-                     echo "<td>";
+                     echo "<td><a href='update.php?client_id=".$row['client_id']."'>Edit</a></td>";
 
-                   if($row['status']=='Pending')
-                   {
+                   //if($row['status']=='Pending')
+                  // {
 
-                    echo "
+                   /* echo "
                     <form method='POST' action='certificate_dashboard.php' style='display:incline;'>
                     <input type='hidden'  name='cert_id' value='{$row['cert_id']}'>
                     <button type='submit' name='status' class='App' value='Approved'>Approved</button>
@@ -171,15 +171,15 @@ if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['status']))
                     </form>";
                    }
                    else
-                   {
+                   {*/
                     if($row['status']=='Declined')
                     {
                       $cert_id=$row['cert_id'];
                       mysqli_query($con,"update certificate_drafts set notification='on' where cert_id='$cert_id'");
                     }
-                     echo "N/A";
-                   }
-                    echo"</td>";
+                     //echo "N/A";
+                  // }
+                   // echo"</td>";
                     echo"</tr>";
                   }
                     ?>
